@@ -18,7 +18,7 @@ export const protect = (req: any, res: Response, next: NextFunction) => {
   const [, token] = bearer.split(" ");
   if (!token) {
     res.status(401);
-    res.json({ message: "owww ya m3allem t5adem ga3d tat3agreb 🤬" });
+    res.json({ message: "owww ya m3allem rak ghalt 🤬" });
     return;
   }
   try {
@@ -28,7 +28,7 @@ export const protect = (req: any, res: Response, next: NextFunction) => {
   } catch (e) {
     console.error(e);
     res.status(401);
-    res.json({ message: "owww ya m3allem t5adem ga3d tat3agreb 🤬" });
+    res.json({ message: "owww ya m3allem rak ghalt 🤬" });
     return;
   }
 };
