@@ -1,10 +1,12 @@
 import Router from "express";
-import { getProduct } from "../../controllers/productController";
+import {createProduct, getProduct, getProducts, updateProduct} from "../../controllers/productController";
+import {body} from "express-validator";
+import {handleInputErrors} from "../../modules/middlewares";
 
 const router = Router();
-router.get("/", getProduct);
-router.get("/:id");
-router.put("/:id");
-router.post("/");
+router.get("/", getProducts);
+router.get("/:id", getProduct);
+router.put("/:id" , body('name').isString(),handleInputErrors,updateProduct);
+router.post("/", createProduct);
 router.delete("/:id");
 export default router;

@@ -1,5 +1,57 @@
-import { NextFunction, Request, response } from "express";
+import {NextFunction, Request, Response, response} from "express";
+import {body, validationResult} from "express-validator";
+import app from "../server";
+import prisma from "../helpers/db";
+import products from "../routes/products";
 
-export const getProduct = (req: any, res = response, next: NextFunction) => {
-  res.json({ message: req.shh_secret });
+export const getProducts = async (req: any, res = response, next: NextFunction) => {
+    const user = await prisma.user.findUnique({
+        where: {
+            id: req.user.id
+        },
+        include: {
+            products: true
+        }
+    })
+    res.json({data: user!.products})
 };
+export const getProduct = async (req: any, res = response, next: NextFunction) => {
+    const product = await prisma.product.findFirst({
+        where: {
+            id: req.params.id,
+            belongsToId: req.user.id
+        },
+
+    })
+    res.json({data: product})
+};
+
+export const createProduct = async (req: any, res = response, next: NextFunction) => {
+    const product = await prisma.product.create({
+        data: {
+            name: req.body.name,
+            belongsToId: req.user.id
+        }
+    })
+    res.json({data:product})
+
+}
+export const updateProduct = async (req: Request, res = response, next: NextFunction) => {
+    const updated = await prisma.product.update({
+        where: {
+            id: req.params.id,
+        },
+        data: {
+            name: req.body.name,
+        }
+    })
+    res.json({data: updated})
+}
+export const deleteProduct = async (req: Request, res: Response) => {
+    await prisma.product.delete({
+        where: {
+            id: req.params.id,
+        }
+    })
+    res.json({message:"product deleted successfully"})
+}
