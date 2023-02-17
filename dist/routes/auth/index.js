@@ -4,9 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 exports.__esModule = true;
 var express_1 = __importDefault(require("express"));
-var user_1 = require("../../handlers/user");
+var userController_1 = require("../../controllers/userController");
 var router = (0, express_1["default"])();
-router.post("/signup", user_1.createNewUser);
-router.post("/signin", user_1.signin);
+router.post("/signup", userController_1.createNewUser);
+router.post("/signin", userController_1.signin);
 exports["default"] = router;
 //# sourceMappingURL=index.js.map

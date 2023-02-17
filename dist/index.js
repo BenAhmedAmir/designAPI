@@ -28,8 +28,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 var server_1 = __importDefault(require("./server"));
 var dotenv = __importStar(require("dotenv"));
+var config_1 = __importDefault(require("./config"));
 dotenv.config();
-server_1["default"].listen(3002, function () {
-    console.log("listening on port 3002");
+server_1["default"].listen(config_1["default"].port, function () {
+    console.log("listening on port : ".concat(config_1["default"].port));
 });
 //# sourceMappingURL=index.js.map

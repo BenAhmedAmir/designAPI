@@ -17,7 +17,6 @@ var protect = function (req, res, next) {
     if (!bearer) {
         res.status(401);
         res.json({ message: "owww ya m3allem win da5el 🤬" });
-        console.log("from protect negation");
         return;
     }
     //descruction
@@ -29,9 +28,8 @@ var protect = function (req, res, next) {
     }
     try {
         var user = jsonwebtoken_1["default"].verify(token, process.env.JWT_SECRET);
-        console.log(user);
         req.user = user;
-        next;
+        next();
     }
     catch (e) {
         console.error(e);

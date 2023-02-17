@@ -12,6 +12,17 @@ app.use((0, morgan_1["default"])("dev"));
 app.use(express_1["default"].json());
 // Allow the client to make query string parameters
 express_1["default"].urlencoded({ extended: true });
+app.get("/", function (req, res) {
+    res.json({ message: "Hallo!" });
+});
 app.use("/api", routes_1["default"]);
+app.use(function (err, req, res, next) {
+    if (err.type === 'auth') {
+        res.status(401).json({ message: 'unauthorized' });
+    }
+    else if (err.type === 'input') {
+        res.status(400).json({ message: 'invalid input' });
+    }
+});
 exports["default"] = app;
 //# sourceMappingURL=server.js.map

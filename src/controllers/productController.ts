@@ -33,13 +33,16 @@ export const createProduct = async (req: any, res = response, next: NextFunction
             belongsToId: req.user.id
         }
     })
-    res.json({data:product})
+    res.json({data: product})
 
 }
-export const updateProduct = async (req: Request, res = response, next: NextFunction) => {
+export const updateProduct = async (req: any, res = response, next: NextFunction) => {
     const updated = await prisma.product.update({
         where: {
-            id: req.params.id,
+            id_belongsToId: {
+                id: req.params.id,
+                belongsToId: req.user.id,
+            }
         },
         data: {
             name: req.body.name,
@@ -47,11 +50,14 @@ export const updateProduct = async (req: Request, res = response, next: NextFunc
     })
     res.json({data: updated})
 }
-export const deleteProduct = async (req: Request, res: Response) => {
-    await prisma.product.delete({
+export const deleteProduct = async (req: any, res: Response) => {
+    const deleted = await prisma.product.delete({
         where: {
-            id: req.params.id,
+            id_belongsToId: {
+                id: req.params.id,
+                belongsToId: req.user.id,
+            }
         }
     })
-    res.json({message:"product deleted successfully"})
+    res.json({data: deleted})
 }
